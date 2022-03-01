@@ -1,0 +1,118 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: url('../assets/year2023.jpeg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+header{
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.title{
+    width: 30vw;
+    margin: 4vw 0vw 0vw 0vw;
+}
+
+.events-container{
+    clear: both;
+    display: inline-flex;
+    height: 78vh;
+}
+
+.card{
+    cursor: pointer;
+    text-align: center;
+    padding: 1vw;
+}
+
+.events-list{
+    margin: 0;
+    width: 22vw;
+    overflow:scroll;
+    margin-left: 2vw;
+}
+
+::scrollbar {
+    width: 3px;
+    scroll-behavior: smooth;
+}
+
+
+.open-button {
+    background-color: #555;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    top: 120px;
+    right: 50px;
+    width: 16vw;
+  }
+
+  .form-popup {
+    display: none;
+    position: fixed;
+    top: 175px;
+    right: 52px;
+    border: 3px solid black;
+    z-index: -9;
+  }
+
+.form-container {
+    max-width: 15.3vw;
+    padding: 10px;
+  }
+  
+.form-container label{
+    color: white;
+}
+
+.form-container input[type=text], .form-container input[type=date] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+  
+.form-container input[type=text]:focus, .form-container input[type=date]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+.form-container .btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+}
+
+
+.form-container .cancel {
+    background-color: red;
+}
+  
+.form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+}
+
+.event-container{
+    width: 75vw;
+    text-align: center;
+}
