@@ -171,8 +171,8 @@ submitCustomEvent.addEventListener('click', (e) => {
 
 
 // delete any custom event upon clicking cross in card
-const eventsList = document.querySelectorAll('.events-list');
-eventsList.forEach((currentClose) => {
+const closeButton = document.querySelectorAll('.delete-event');
+closeButton.forEach((currentClose) => {
     currentClose.addEventListener('click', (e) => {
         UI.deleteEvent(e.target.parentElement.parentElement);
         Store.deleteEvent(e.target.previousElementSibling.textContent);
