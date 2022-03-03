@@ -50,6 +50,9 @@ class UI {
             nonFormContainers[i].addEventListener('click', UI.closeForm);
         }
 
+        //load all events with details
+        UI.loadUserEvents();
+        UI.clearFields();
     }
 
 
@@ -68,19 +71,17 @@ class UI {
         addEventCard.innerHTML = `
             <div class= "card-body">
                 <h4 class= "card-title p-10">${eventDetails.eventName}</h4>
-                <button type="button" class="btn btn-primary btn-sm delete-event" >X</button>
+                <button type="button" class="btn btn-primary btn-sm delete-event">X</button>
             </div>
         `;
 
         //adding the block to events list
         eventsList.appendChild(addEventCard);
+
     }
 
     static deleteEvent(eventTarget) {
-        if (eventTarget.classList.contains('delete-event')) {
-            eventTarget.parentElement.parentElement.remove();
-            UI.showAlert('Event Successfully Removed', 'success');
-        }
+        eventTarget.remove();
     }
 
     static showAlert(message, status) {
@@ -94,7 +95,7 @@ class UI {
         container.insertBefore(div, header);
 
         // Vanish in 2 seconds
-        setTimeout(() => document.querySelector('.alert').remove(), 2000);
+        setTimeout(() => document.querySelector('.alert').remove(), 800);
     }
 
     static clearFields() {
@@ -118,9 +119,19 @@ class Store {
         return events;
     }
 
-    static addEvent(event) {
+    static addEvent(customEvent) {
         const events = Store.getUserEvents();
-        events.push(event);
+        events.push(customEvent);
+        localStorage.setItem('events', JSON.stringify(events));
+    }
+
+    static deleteEvent(customEventName) {
+        const events = Store.getUserEvents();
+        events.forEach((event, index) => {
+            if (event.eventName === customEventName) {
+                events.splice(index, 1);
+            }
+        });
         localStorage.setItem('events', JSON.stringify(events));
     }
 }
@@ -138,7 +149,7 @@ UI.loadAppElements(date, month, nonFormContainers, year);
 
 
 //add new event 
-const submitCustomEvent = document.querySelector('.btn');
+const submitCustomEvent = document.querySelector('.submit-custom-event');
 submitCustomEvent.addEventListener('click', (e) => {
     e.preventDefault();
     const eventName = document.querySelector('#event-name').value;
@@ -159,7 +170,12 @@ submitCustomEvent.addEventListener('click', (e) => {
 });
 
 
-//delete any event
-document.querySelector('.events-list').addEventListener('click', (e) => {
-    UI.deleteEvent(e.target);
+// delete any custom event upon clicking cross in card
+const closeButton = document.querySelectorAll('.delete-event');
+closeButton.forEach((currentClose) => {
+    currentClose.addEventListener('click', (e) => {
+        UI.deleteEvent(e.target.parentElement.parentElement);
+        Store.deleteEvent(e.target.previousElementSibling.textContent);
+        UI.showAlert('Event Successfully Removed', 'success');
+    });
 });

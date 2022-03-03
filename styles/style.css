@@ -44,6 +44,7 @@ header{
     cursor: pointer;
     text-align: center;
     padding: 1vw;
+    background: linear-gradient();
 }
 
 .card-body{
