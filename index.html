@@ -11,48 +11,57 @@
 </head>
 
 <body>
-    <header>
-        <h1 class="text-center title">Occasions Inventory</h1>
+    <header class="header non-form-containers">
+        <h1 class="text-center title">Occasions Inventory - </h1>
+        <h1 class="year-display"></h1>
     </header>
     <div class="events-container">
 
         <!-- Different Event Tags Present -->
-        <div class="events-list mt-2">
+        <div class="events-list mt-2 non-form-containers">
             <div class="card text-white bg-dark m-3" style="max-width: 20rem;">
                 <div class="card-body">
                     <h4 class="card-title p-10">New Year</h4>
                 </div>
             </div>
-            <div class="card text-white bg-primary m-3" style="max-width: 20rem;">
-                <div class="card-body">
-                    <h4 class="card-title">Christmas</h4>
-                </div>
-            </div>
         </div>
 
         <!--Add event form -->
-        <button class="open-button" onclick="openForm()">Add Event</button>
+        <button class="open-button" onclick="UI.openForm()">Add Event</button>
 
         <div class="form-popup" id="myForm">
             <form class="form-container">
 
                 <label for="email"><b>Event-Name</b></label>
-                <input type="text" name="event-name" required>
+                <input type="text" name="event-name" id="event-name" required>
 
-                <label for="psw"><b>Date</b></label>
-                <input type="date" name="psw" required>
+                <div class="date-container">
+                    <div class="date">
+                        <label for="date"><b>DATE</b></label>
+                        <select name="date" id="date" style="margin-left: 50px;" required>
+                            <option value="DATE">DATE</option>
+                        </select>
+                    </div>
+
+                    <div class="date">
+                        <label for="month"><b>MONTH</b></label>
+                        <select name="month" id="month" required>
+                            <option value="MONTH">MONTH</option>
+                        </select>
+                    </div>
+                </div>
 
                 <button type="submit" class="btn">ADD</button>
-                <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+                <button type="button" class="btn cancel" onclick="UI.closeForm()">Cancel</button>
             </form>
         </div>
 
         <!-- Event countdown display -->
-        <div class="event-container">
+        <div class="event-container non-form-containers">
             <h1 class="event-display"></h1>
         </div>
     </div>
-    <script src="app.js"></script>
+    <script src="./scripts/app.js"></script>
 </body>
 
 </html>

@@ -16,6 +16,7 @@ header{
     color: white;
     display: flex;
     justify-content: center;
+    font-size: 2.8vw;
 }
 
 .title{
@@ -23,10 +24,20 @@ header{
     margin: 4vw 0vw 0vw 0vw;
 }
 
+.year-display{
+    margin-top: 4vw;
+}
+
 .events-container{
     clear: both;
     display: inline-flex;
     height: 78vh;
+}
+.events-list{
+    margin: 0;
+    width: 22vw;
+    overflow:scroll;
+    margin-left: 2vw;
 }
 
 .card{
@@ -35,11 +46,8 @@ header{
     padding: 1vw;
 }
 
-.events-list{
-    margin: 0;
-    width: 22vw;
-    overflow:scroll;
-    margin-left: 2vw;
+.card-body{
+    display: inline-flex;
 }
 
 ::scrollbar {
@@ -56,7 +64,7 @@ header{
     cursor: pointer;
     opacity: 0.8;
     position: fixed;
-    top: 120px;
+    top: 140px;
     right: 50px;
     width: 16vw;
   }
@@ -64,14 +72,14 @@ header{
   .form-popup {
     display: none;
     position: fixed;
-    top: 175px;
-    right: 52px;
+    top: 196px;
+    right: 49px;
     border: 3px solid black;
-    z-index: -9;
+    z-index: 8;
   }
 
 .form-container {
-    max-width: 15.3vw;
+    max-width: 15.80vw;
     padding: 10px;
   }
   
@@ -79,17 +87,29 @@ header{
     color: white;
 }
 
-.form-container input[type=text], .form-container input[type=date] {
+.form-container input[type=text]{
     width: 100%;
     padding: 15px;
     margin: 5px 0 22px 0;
     border: none;
     background: #f1f1f1;
 }
-  
-.form-container input[type=text]:focus, .form-container input[type=date]:focus {
+
+.form-container input[type=text]:focus{
     background-color: #ddd;
     outline: none;
+}
+
+.date-container .date{
+    margin-bottom: 20px;
+}
+
+.date-container .date select{
+    margin-left: 30px;
+    height: 36px;
+    width: 100px;
+    border-radius: 8px;
+    text-align: center;
 }
 
 .form-container .btn {
