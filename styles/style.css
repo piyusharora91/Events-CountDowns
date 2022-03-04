@@ -65,27 +65,28 @@ header{
     cursor: pointer;
     opacity: 0.8;
     position: fixed;
-    top: 140px;
-    right: 50px;
+    top: 50px;
+    left: 70px;
     width: 16vw;
   }
 
   .form-popup {
     display: none;
     position: fixed;
-    top: 196px;
-    right: 49px;
+    top: 106px;
+    left: 70px;
+    background-color: white;
     border: 3px solid black;
     z-index: 8;
   }
 
 .form-container {
-    max-width: 15.80vw;
+    max-width: 15.60vw;
     padding: 10px;
   }
   
 .form-container label{
-    color: white;
+    color: black;
 }
 
 .form-container input[type=text]{
@@ -136,4 +137,21 @@ header{
 .event-container{
     width: 75vw;
     text-align: center;
+}
+
+.event-title{
+}
+
+.time-container{
+    display: flex;
+    color: white;
+    position: fixed;
+    top: 28rem;
+    right: 9rem;
+    font-size: 3rem;
+    z-index: 8; 
+}
+
+.time{
+    margin-left: 5rem;
 }

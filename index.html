@@ -19,18 +19,13 @@
 
         <!-- Different Event Tags Present -->
         <div class="events-list mt-2 non-form-containers">
-            <div class="card text-white bg-dark m-3" style="max-width: 20rem;">
-                <div class="card-body">
-                    <h4 class="card-title p-10">New Year</h4>
-                </div>
-            </div>
         </div>
 
         <!--Add event form -->
         <button class="open-button" onclick="UI.openForm()">Add Event</button>
 
         <div class="form-popup" id="myForm">
-            <form class="form-container">
+            <form class="form-container" autocomplete="off">
 
                 <label for="email"><b>Event-Name</b></label>
                 <input type="text" name="event-name" id="event-name" required>
@@ -58,7 +53,25 @@
 
         <!-- Event countdown display -->
         <div class="event-container non-form-containers">
-            <h1 class="event-display"></h1>
+            <h1 class="event-title"></h1>
+            <div class="time-container">
+                <div class="time">
+                    <h1 id="days">00</h1>
+                    <small>DAYS</small>
+                </div>
+                <div class="time">
+                    <h1 id="hours">00</h1>
+                    <small>HOURS</small>
+                </div>
+                <div class="time">
+                    <h1 id="minutes">00</h1>
+                    <small>MINUTES</small>
+                </div>
+                <div class="time">
+                    <h1 id="seconds">00</h1>
+                    <small>SECONDS</small>
+                </div>
+            </div>
         </div>
     </div>
     <script src="./scripts/app.js"></script>

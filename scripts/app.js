@@ -18,8 +18,10 @@ class UI {
         if (document.getElementById("myForm").style.display === "block") {
             document.getElementById("myForm").style.display = "none";
         }
+        UI.clearFields();
     }
-    static loadAppElements(date, month, nonFormContainers, year) {
+    static loadAppElements(date, month, nonFormContainers, currentTime) {
+        let year = currentTime.getFullYear();
         const displayYearContainer = document.querySelector('.year-display');
         displayYearContainer.innerText = year;    //Displays Year on heading  
 
@@ -52,7 +54,15 @@ class UI {
 
         //load all events with details
         UI.loadUserEvents();
+
+        //clear form fields
         UI.clearFields();
+    }
+
+    // this returns the update list of events present for the UI to handle if this is not done then to perform deltion of event 
+    //right after adding it will not be possible have to refresh page
+    static updateEventsList() {
+        return document.querySelectorAll('.card');
     }
 
 
@@ -103,6 +113,34 @@ class UI {
         document.querySelector('#date').value = 'DATE';
         document.querySelector('#month').value = 'MONTH';
     }
+
+    static displayCount(event) {
+        const currentTime = new Date();
+        const days = document.querySelector('#days');
+        const hours = document.querySelector('#hours');
+        const minutes = document.querySelector('#minutes');
+        const seconds = document.querySelector('#seconds');
+        let currentYear = currentTime.getFullYear();
+
+        if ((currentTime.getMonth() + 1) >= event.month) {
+            if (currentTime.getDate() <= event.date || (currentTime.getMonth() + 1) >= event.month) {
+                currentYear++;
+            }
+        }
+
+
+        const newYearTime = new Date(`${event.month} ${event.date} ${currentYear} 00:00:00`);
+        const timeLeft = newYearTime - currentTime;
+
+        const d = Math.floor(timeLeft / 1000 / 60 / 60 / 24);
+        const h = Math.floor(timeLeft / 1000 / 60 / 60) % 24;
+        const m = Math.floor(timeLeft / 1000 / 60) % 60;
+        const s = Math.floor(timeLeft / 1000) % 60;
+        days.innerText = d;
+        hours.innerText = h;
+        minutes.innerText = m;
+        seconds.innerText = s;
+    }
 }
 
 
@@ -142,10 +180,11 @@ let date = document.querySelector('#date');
 let month = document.querySelector('#month');
 const nonFormContainers = document.querySelectorAll('.non-form-containers');
 const currentTime = new Date();
-let year = currentTime.getFullYear();
 
-UI.loadAppElements(date, month, nonFormContainers, year);
+UI.loadAppElements(date, month, nonFormContainers, currentTime);
 
+//function to update the events-list by running a foreach loop and returning the updated array of events
+let eventsList = UI.updateEventsList();
 
 
 //add new event 
@@ -166,16 +205,22 @@ submitCustomEvent.addEventListener('click', (e) => {
         UI.showAlert('Event Successfully Added', 'success');
         UI.clearFields();
         UI.closeForm();
+        eventsList = UI.updateEventsList();
+        setInterval(() => UI.displayCount(newEvent), 1000);
     }
 });
 
 
+
 // delete any custom event upon clicking cross in card
-const closeButton = document.querySelectorAll('.delete-event');
-closeButton.forEach((currentClose) => {
-    currentClose.addEventListener('click', (e) => {
-        UI.deleteEvent(e.target.parentElement.parentElement);
-        Store.deleteEvent(e.target.previousElementSibling.textContent);
-        UI.showAlert('Event Successfully Removed', 'success');
+eventsList.forEach((currentEvent) => {
+    const deleteButton = currentEvent.children[0].children[1];
+    deleteButton.addEventListener('click', (e) => {
+        if (deleteButton.classList.contains('delete-event')) {
+            UI.deleteEvent(currentEvent);
+            Store.deleteEvent(currentEvent.children[0].children[0].textContent);
+            UI.showAlert('Event Successfully Removed', 'success');
+            eventsList = UI.updateEventsList();
+        }
     });
 });
