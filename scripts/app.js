@@ -17,32 +17,27 @@ class UI {
     static closeForm() {
         if (document.getElementById("myForm").style.display === "block") {
             document.getElementById("myForm").style.display = "none";
+            UI.clearFields();
         }
-        UI.clearFields();
     }
-    static loadAppElements(date, month, nonFormContainers, currentTime) {
-        let year = currentTime.getFullYear();
-        const displayYearContainer = document.querySelector('.year-display');
-        displayYearContainer.innerText = year;    //Displays Year on heading  
 
-        //displays dates in numbers
-        for (let i = 1; i <= 31; i++) {
+    static loadAppElements(date, month, nonFormContainers) {
+        for (let i = 1; i <= 31; i++) {             //displays dates in numbers
             const add_date = document.createElement('option');
             if (i < 10) {
-                add_date.innerHTML = '0' + i;
+                add_date.textContent = '0' + i;
             }
-            else add_date.innerHTML = i;
+            else add_date.textContent = i;
             add_date.value = i;
             date.append(add_date);
         }
 
-        //displays months in numbers
-        for (let i = 1; i <= 12; i++) {
+        for (let i = 1; i <= 12; i++) {               //displays months in numbers
             const add_month = document.createElement('option');
             if (i < 10) {
-                add_month.innerHTML = '0' + i;
+                add_month.textContent = '0' + i;
             }
-            else add_month.innerHTML = i;
+            else add_month.textContent = i;
             add_month.value = i;
             month.append(add_month);
         }
@@ -51,20 +46,7 @@ class UI {
         for (let i = 0; i < nonFormContainers.length; i++) {
             nonFormContainers[i].addEventListener('click', UI.closeForm);
         }
-
-        //load all events with details
-        UI.loadUserEvents();
-
-        //clear form fields
-        UI.clearFields();
     }
-
-    // this returns the update list of events present for the UI to handle if this is not done then to perform deltion of event 
-    //right after adding it will not be possible have to refresh page
-    static updateEventsList() {
-        return document.querySelectorAll('.card');
-    }
-
 
     static loadUserEvents() {
         let events = Store.getUserEvents();
@@ -73,25 +55,22 @@ class UI {
 
     static addEvent(eventDetails) {
         const eventsList = document.querySelector('.events-list');
-
-        //creating the div block of card to display on the events-list container
-        const addEventCard = document.createElement('div');
+        const addEventCard = document.createElement('div');     //creating the div block of card to display on the events-list container
         addEventCard.classList.add('card', 'text-white', 'bg-dark', 'm-3');
         addEventCard.style.maxWidth = '20rem';
-        addEventCard.innerHTML = `
+        addEventCard.innerHTML = `                            
             <div class= "card-body">
                 <h4 class= "card-title p-10">${eventDetails.eventName}</h4>
                 <button type="button" class="btn btn-primary btn-sm delete-event">X</button>
             </div>
         `;
-
-        //adding the block to events list
-        eventsList.appendChild(addEventCard);
-
+        eventsList.appendChild(addEventCard);               //adding the block to events list 
     }
 
     static deleteEvent(eventTarget) {
-        eventTarget.remove();
+        if (eventTarget.classList.contains('delete-event')) {
+            eventTarget.parentElement.parentElement.remove();
+        }
     }
 
     static showAlert(message, status) {
@@ -104,8 +83,7 @@ class UI {
         const header = document.querySelector('.header');
         container.insertBefore(div, header);
 
-        // Vanish in 2 seconds
-        setTimeout(() => document.querySelector('.alert').remove(), 800);
+        setTimeout(() => document.querySelector('.alert').remove(), 800);          //vanishes in 0.8 sec
     }
 
     static clearFields() {
@@ -127,7 +105,6 @@ class UI {
                 currentYear++;
             }
         }
-
 
         const newYearTime = new Date(`${event.month} ${event.date} ${currentYear} 00:00:00`);
         const timeLeft = newYearTime - currentTime;
@@ -175,20 +152,16 @@ class Store {
 }
 
 
-
 let date = document.querySelector('#date');
 let month = document.querySelector('#month');
 const nonFormContainers = document.querySelectorAll('.non-form-containers');
-const currentTime = new Date();
+const submitCustomEvent = document.querySelector('.submit-custom-event');
 
-UI.loadAppElements(date, month, nonFormContainers, currentTime);
-
-//function to update the events-list by running a foreach loop and returning the updated array of events
-let eventsList = UI.updateEventsList();
+UI.loadAppElements(date, month, nonFormContainers);
+UI.loadUserEvents();
 
 
 //add new event 
-const submitCustomEvent = document.querySelector('.submit-custom-event');
 submitCustomEvent.addEventListener('click', (e) => {
     e.preventDefault();
     const eventName = document.querySelector('#event-name').value;
@@ -205,22 +178,13 @@ submitCustomEvent.addEventListener('click', (e) => {
         UI.showAlert('Event Successfully Added', 'success');
         UI.clearFields();
         UI.closeForm();
-        eventsList = UI.updateEventsList();
-        setInterval(() => UI.displayCount(newEvent), 1000);
     }
 });
 
 
-
 // delete any custom event upon clicking cross in card
-eventsList.forEach((currentEvent) => {
-    const deleteButton = currentEvent.children[0].children[1];
-    deleteButton.addEventListener('click', (e) => {
-        if (deleteButton.classList.contains('delete-event')) {
-            UI.deleteEvent(currentEvent);
-            Store.deleteEvent(currentEvent.children[0].children[0].textContent);
-            UI.showAlert('Event Successfully Removed', 'success');
-            eventsList = UI.updateEventsList();
-        }
-    });
+document.querySelector('.events-list').addEventListener('click', (e) => {
+    UI.deleteEvent(e.target);
+    Store.deleteEvent(e.target.previousElementSibling.innerText);
+    UI.showAlert('Event Successfully Removed', 'success');
 });

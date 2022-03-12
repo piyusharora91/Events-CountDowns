@@ -20,8 +20,9 @@ header{
 }
 
 .title{
-    width: 30vw;
+    width: 35vw;
     margin: 4vw 0vw 0vw 0vw;
+    text-align: center;
 }
 
 .year-display{
@@ -33,6 +34,7 @@ header{
     display: inline-flex;
     height: 78vh;
 }
+
 .events-list{
     margin: 0;
     width: 22vw;
@@ -143,7 +145,7 @@ header{
 }
 
 .time-container{
-    display: flex;
+    display: inline-flex;
     color: white;
     position: fixed;
     top: 28rem;
