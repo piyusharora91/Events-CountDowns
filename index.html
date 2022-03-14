@@ -13,69 +13,52 @@
 </head>
 
 <body>
-    <header class="header non-form-containers">
-        <h1 class="title">Occasions Inventory</h1>
-        <h1 class="year-display"></h1>
-    </header>
-    <div class="events-container">
 
-        <!-- Different Event Tags Present -->
-        <div class="events-list mt-2 non-form-containers">
-        </div>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Occasions Inventory</h1>
+        </header>
 
-        <!--Add event form -->
-        <button class="open-button" onclick="UI.openForm()">Add Event</button>
+        <div class="form-container">
+            <h3 class="mt-1">Add New Event</h3>
 
-        <div class="form-popup" id="myForm">
-            <form class="form-container" autocomplete="off">
-
-                <label for="email"><b>Event-Name</b></label>
-                <input type="text" name="event-name" id="event-name" required>
-
-                <div class="date-container">
-                    <div class="date">
-                        <label for="date"><b>DATE</b></label>
-                        <select name="date" id="date" style="margin-left: 50px;" required>
-                            <option value="DATE">DATE</option>
-                        </select>
+            <form>
+                <fieldset>
+                    <div class="form-group">
+                        <input type="text" id="event-name" class="form-control" placeholder='Input-Event-Name' required>
                     </div>
 
-                    <div class="date">
-                        <label for="month"><b>MONTH</b></label>
-                        <select name="month" id="month" required>
-                            <option value="MONTH">MONTH</option>
-                        </select>
+                    <div class="form-group">
+                        <input type="date" id="event-date" class="form-control" required>
                     </div>
-                </div>
 
-                <button type="submit" class="btn submit-custom-event">ADD</button>
-                <button type="button" class="btn cancel" onclick="UI.closeForm()">Cancel</button>
+                    <button type="button" id='submit' class="btn btn-outline-primary">Add</button>
+                </fieldset>
             </form>
         </div>
 
-        <!-- Event countdown display -->
-        <div class="event-container non-form-containers">
-            <h1 class="event-title"></h1>
-            <div class="time-container">
-                <div class="time">
-                    <h1 id="days">00</h1>
-                    <small>DAYS</small>
-                </div>
-                <div class="time">
-                    <h1 id="hours">00</h1>
-                    <small>HOURS</small>
-                </div>
-                <div class="time">
-                    <h1 id="minutes">00</h1>
-                    <small>MINUTES</small>
-                </div>
-                <div class="time">
-                    <h1 id="seconds">00</h1>
-                    <small>SECONDS</small>
-                </div>
-            </div>
+        <div class="events-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            ID
+                        </th>
+                        <th scope="col">
+                            Occassion
+                        </th>
+                        <th scope="col">
+                            Date
+                        </th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="events-list">
+                </tbody>
+            </table>
         </div>
     </div>
+
     <script src="./scripts/app.js"></script>
 </body>
 
